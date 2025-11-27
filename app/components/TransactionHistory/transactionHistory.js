@@ -14,7 +14,7 @@ const TransactionHistory = () => {
       {transactions.map((item) => (
         <div
           key={item.id}
-          className={`container p-3 mt-2 rounded shadow-sm history-item d-flex justify-content-between align-items-center ${
+          className={`container p-1 mt-2 rounded shadow-sm history-item d-flex justify-content-between align-items-center ${
             item.type === "income" ? "bg-income" : "bg-expense"
           }`}
         >
