@@ -8,7 +8,7 @@ import { GlobalProvider } from "./components/Context/globalContext";
 export default function Home() {
   return (
     <div className="container mt-4">
-      <div className="mx-auto w-100" style={{ maxWidth: "480px" }}>
+      <div className="mx-auto w-100" style={{ maxWidth: "600px" }}>
 
         <GlobalProvider>
 
