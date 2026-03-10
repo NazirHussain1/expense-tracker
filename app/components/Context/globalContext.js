@@ -14,9 +14,10 @@ export function GlobalProvider({ children }) {
   const [expense, setExpense] = useState(0);
   
   const addTransaction = (type) => {
-    if (!description || !amount) return;
+    if (!description.trim() || !amount) return;
 
     const value = Number(amount);
+    if (value <= 0 || isNaN(value)) return;
 
     if (type === "income") {
       setIncome(income + value);
@@ -28,7 +29,7 @@ export function GlobalProvider({ children }) {
 
     setTransactions([
       ...transactions,
-      { id: Date.now(), description, amount: value, type },
+      { id: Date.now(), description: description.trim(), amount: value, type },
     ]);
 
     setDescription("");
@@ -36,6 +37,17 @@ export function GlobalProvider({ children }) {
   };
 
   const removeTransaction = (id) => {
+    const transaction = transactions.find((t) => t.id === id);
+    if (!transaction) return;
+
+    if (transaction.type === "income") {
+      setIncome(income - transaction.amount);
+      setBalance(balance - transaction.amount);
+    } else {
+      setExpense(expense - transaction.amount);
+      setBalance(balance + transaction.amount);
+    }
+
     setTransactions(transactions.filter((t) => t.id !== id));
   };
 

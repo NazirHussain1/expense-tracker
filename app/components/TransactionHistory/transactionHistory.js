@@ -11,6 +11,10 @@ const TransactionHistory = () => {
     <div className="mt-4">
       <h5 className="text-center fw-semibold mb-3">Transaction History</h5>
 
+      {transactions.length === 0 && (
+        <p className="text-center text-muted">No transactions yet</p>
+      )}
+
       {transactions.map((item) => (
         <div
           key={item.id}
