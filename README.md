@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Expense Tracker
+
+A simple and intuitive expense tracking application built with Next.js and React. Track your income and expenses, view your current balance, and manage your transaction history.
+
+## Features
+
+- Add income and expense transactions
+- View current balance in real-time
+- Track total income and expenses separately
+- Transaction history with delete functionality
+- Clean and responsive UI using Bootstrap 5
+- Input validation for amounts
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- Bootstrap 5
+- React Context API for state management
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Note: If port 3000 is already in use, you can specify a different port:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev -- -p 3001
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── components/
+│   ├── AddNew/          # Add transaction form
+│   ├── Balance/         # Current balance display
+│   ├── Context/         # Global state management
+│   ├── ExpenceIncome/   # Income/Expense summary
+│   ├── Header/          # App header
+│   └── TransactionHistory/  # Transaction list
+├── layout.js            # Root layout with Bootstrap
+└── page.js              # Main page component
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How to Use
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Enter a transaction description
+2. Enter the amount (positive numbers only)
+3. Click "Income" to add income or "Expense" to add an expense
+4. View your updated balance and transaction history
+5. Click the × button to remove any transaction
 
-## Deploy on Vercel
+## Future Improvements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Recommended Enhancements:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Data Persistence** - Add localStorage or database integration
+2. **Categories** - Add transaction categories (Food, Transport, Salary, etc.)
+3. **Date Tracking** - Show transaction dates and filter by date range
+4. **Charts/Graphs** - Visual representation of spending patterns
+5. **Export Data** - Export transactions to CSV or PDF
+6. **Search/Filter** - Search transactions by description or filter by type
+7. **Edit Transactions** - Allow editing existing transactions
+8. **Budget Goals** - Set monthly budget limits with alerts
+
+### Database Options:
+
+For data persistence, you can integrate:
+
+- **localStorage** (Simplest) - Client-side storage, no backend needed
+- **MongoDB + Mongoose** - NoSQL database, great for JSON-like data
+- **PostgreSQL + Prisma** - Relational database with type-safe ORM
+- **Supabase** - PostgreSQL with real-time features and auth
+- **Firebase Firestore** - Real-time NoSQL database with easy setup
+
+For a simple expense tracker, localStorage is sufficient. For multi-user or cloud sync, consider Supabase or Firebase.
+
+## Deployment
+
+This project is deployed and live. You can deploy your own version on:
+
+- [Vercel](https://vercel.com) (Recommended for Next.js)
+- [Netlify](https://netlify.com)
+- [Railway](https://railway.app)
+
+## Author
+
+Created by NazirHussain
