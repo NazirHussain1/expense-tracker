@@ -41,7 +41,7 @@ const Charts = () => {
     labels: Object.keys(expenseByCategory),
     datasets: [
       {
-        label: 'Expense by Category',
+        label: 'Expense',
         data: Object.values(expenseByCategory),
         backgroundColor: [
           '#FF6384',
@@ -51,7 +51,8 @@ const Charts = () => {
           '#9966FF',
           '#FF9F40',
         ],
-        borderWidth: 1,
+        borderColor: '#fff',
+        borderWidth: 2,
       },
     ],
   };
@@ -60,22 +61,67 @@ const Charts = () => {
     labels: ['Income', 'Expense'],
     datasets: [
       {
-        label: 'Amount ($)',
+        label: 'Amount',
         data: [incomeVsExpense.income, incomeVsExpense.expense],
         backgroundColor: ['#28a745', '#dc3545'],
+        borderColor: ['#1e7e34', '#bd2130'],
         borderWidth: 1,
       },
     ],
   };
 
-  const chartOptions = {
+  const pieOptions = {
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
       legend: {
         position: 'bottom',
+        labels: {
+          padding: 10,
+          font: {
+            size: 12,
+          },
+        },
       },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const label = context.label || '';
+            const value = context.parsed || 0;
+            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `${label}: $${value.toFixed(2)} (${percentage}%)`;
+          }
+        }
+      }
     },
+  };
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `$${context.parsed.y.toFixed(2)}`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: function(value) {
+            return '$' + value.toFixed(0);
+          }
+        }
+      }
+    }
   };
 
   if (loading || transactions.length === 0) {
@@ -91,7 +137,9 @@ const Charts = () => {
           <div className="bg-light p-3 rounded shadow-sm">
             <h6 className="text-center mb-3">Expense by Category</h6>
             {Object.keys(expenseByCategory).length > 0 ? (
-              <Pie data={pieData} options={chartOptions} />
+              <div style={{ position: 'relative', height: '250px' }}>
+                <Pie data={pieData} options={pieOptions} />
+              </div>
             ) : (
               <p className="text-center text-muted">No expense data</p>
             )}
@@ -101,7 +149,9 @@ const Charts = () => {
         <div className="col-md-6">
           <div className="bg-light p-3 rounded shadow-sm">
             <h6 className="text-center mb-3">Income vs Expense</h6>
-            <Bar data={barData} options={chartOptions} />
+            <div style={{ position: 'relative', height: '250px' }}>
+              <Bar data={barData} options={barOptions} />
+            </div>
           </div>
         </div>
       </div>

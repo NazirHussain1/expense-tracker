@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 
 export const GlobalContext = createContext();
 
@@ -15,6 +15,10 @@ export function GlobalProvider({ children }) {
   const [balance, setBalance] = useState(0);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("all");
   
   useEffect(() => {
     fetchTransactions();
@@ -115,6 +119,16 @@ export function GlobalProvider({ children }) {
     }
   };
 
+  const filteredTransactions = useMemo(() => {
+    return transactions.filter((transaction) => {
+      const matchesSearch = transaction.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = filterType === "all" || transaction.type === filterType;
+      const matchesCategory = filterCategory === "all" || transaction.category === filterCategory;
+      
+      return matchesSearch && matchesType && matchesCategory;
+    });
+  }, [transactions, searchTerm, filterType, filterCategory]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -125,6 +139,7 @@ export function GlobalProvider({ children }) {
         category,
         setCategory,
         transactions,
+        filteredTransactions,
         addTransaction,
         removeTransaction,
         balance,
@@ -132,6 +147,12 @@ export function GlobalProvider({ children }) {
         expense,
         loading,
         error,
+        searchTerm,
+        setSearchTerm,
+        filterType,
+        setFilterType,
+        filterCategory,
+        setFilterCategory,
       }}
     >
       {children}
