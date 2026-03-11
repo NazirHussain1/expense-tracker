@@ -13,9 +13,9 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: transactions });
   } catch (error) {
-    console.error('Database error:', error.message);
+    console.error('GET /api/transactions error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch transactions. Please configure MongoDB URI.' },
+      { success: false, error: error.message || 'Failed to fetch transactions' },
       { status: 500 }
     );
   }
@@ -51,9 +51,9 @@ export async function POST(request) {
       data: { ...transaction, _id: result.insertedId },
     });
   } catch (error) {
-    console.error('Database error:', error.message);
+    console.error('POST /api/transactions error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to add transaction. Please configure MongoDB URI.' },
+      { success: false, error: error.message || 'Failed to add transaction' },
       { status: 500 }
     );
   }

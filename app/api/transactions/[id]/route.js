@@ -29,9 +29,9 @@ export async function DELETE(request, { params }) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Database error:', error.message);
+    console.error('DELETE /api/transactions/[id] error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete transaction. Please configure MongoDB URI.' },
+      { success: false, error: error.message || 'Failed to delete transaction' },
       { status: 500 }
     );
   }
