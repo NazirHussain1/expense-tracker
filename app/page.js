@@ -1,6 +1,7 @@
 import Header from "./components/Header/header";
 import Balance from "./components/Balance/balance";
 import ExpenceIncome from "./components/ExpenceIncome/expenceIncome";
+import Charts from "./components/Charts/charts";
 import TransactionHistory from "./components/TransactionHistory/transactionHistory";
 import AddNew from "./components/AddNew/addNew";
 import { GlobalProvider } from "./components/Context/globalContext";
@@ -16,6 +17,7 @@ export default function Home() {
           <Balance />
           <ExpenceIncome />
           <AddNew />
+          <Charts />
           <TransactionHistory />
           
 

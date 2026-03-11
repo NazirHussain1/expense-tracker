@@ -1,32 +1,53 @@
 # Expense Tracker
 
-A simple and intuitive expense tracking application built with Next.js and React. Track your income and expenses, view your current balance, and manage your transaction history.
+A full-featured expense tracking application built with Next.js, React, and MongoDB. Track your income and expenses with categories, view analytics with charts, and manage your financial data efficiently.
 
 ## Features
 
-- Add income and expense transactions
+- Add income and expense transactions with categories
 - View current balance in real-time
 - Track total income and expenses separately
+- Transaction categories (Food, Transport, Shopping, Bills, Salary, Other)
+- Date tracking for all transactions
+- Visual analytics with Chart.js:
+  - Pie chart showing expense breakdown by category
+  - Bar chart comparing income vs expense
 - Transaction history with delete functionality
 - Clean and responsive UI using Bootstrap 5
-- Input validation for amounts
+- MongoDB Atlas integration for data persistence
+- Input validation for amounts and required fields
 
 ## Tech Stack
 
-- Next.js 16
+- Next.js 16 (App Router)
 - React 19
 - Bootstrap 5
+- MongoDB Atlas
+- Chart.js & react-chartjs-2
 - React Context API for state management
 
 ## Getting Started
 
-First, install the dependencies:
+### Prerequisites
+
+- Node.js installed
+- MongoDB Atlas account (free tier available)
+
+### Installation
+
+1. Install the dependencies:
 
 ```bash
 npm install
 ```
 
-Then, run the development server:
+2. Create a `.env.local` file in the root directory:
+
+```bash
+MONGODB_URI=your_mongodb_connection_string_here
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -44,57 +65,54 @@ npm run dev -- -p 3001
 
 ```
 app/
+├── api/
+│   └── transactions/
+│       ├── route.js         # GET & POST transactions
+│       └── [id]/route.js    # DELETE transaction
 ├── components/
-│   ├── AddNew/          # Add transaction form
-│   ├── Balance/         # Current balance display
-│   ├── Context/         # Global state management
-│   ├── ExpenceIncome/   # Income/Expense summary
-│   ├── Header/          # App header
-│   └── TransactionHistory/  # Transaction list
-├── layout.js            # Root layout with Bootstrap
-└── page.js              # Main page component
+│   ├── AddNew/              # Add transaction form with category
+│   ├── Balance/             # Current balance display
+│   ├── Charts/              # Analytics charts (Pie & Bar)
+│   ├── Context/             # Global state management
+│   ├── ExpenceIncome/       # Income/Expense summary
+│   ├── Header/              # App header
+│   └── TransactionHistory/  # Transaction list with dates
+├── layout.js                # Root layout with Bootstrap
+└── page.js                  # Main page component
+lib/
+└── mongodb.js               # MongoDB connection handler
 ```
 
 ## How to Use
 
 1. Enter a transaction description
 2. Enter the amount (positive numbers only)
-3. Click "Income" to add income or "Expense" to add an expense
-4. View your updated balance and transaction history
-5. Click the × button to remove any transaction
+3. Select a category from the dropdown
+4. Click "Income" to add income or "Expense" to add an expense
+5. View your updated balance and analytics charts
+6. See transaction history with categories and dates
+7. Click the × button to remove any transaction
 
-## Future Improvements
+## Database Schema
 
-### Recommended Enhancements:
-
-1. **Data Persistence** - Add localStorage or database integration
-2. **Categories** - Add transaction categories (Food, Transport, Salary, etc.)
-3. **Date Tracking** - Show transaction dates and filter by date range
-4. **Charts/Graphs** - Visual representation of spending patterns
-5. **Export Data** - Export transactions to CSV or PDF
-6. **Search/Filter** - Search transactions by description or filter by type
-7. **Edit Transactions** - Allow editing existing transactions
-8. **Budget Goals** - Set monthly budget limits with alerts
-
-### Database Options:
-
-For data persistence, you can integrate:
-
-- **localStorage** (Simplest) - Client-side storage, no backend needed
-- **MongoDB + Mongoose** - NoSQL database, great for JSON-like data
-- **PostgreSQL + Prisma** - Relational database with type-safe ORM
-- **Supabase** - PostgreSQL with real-time features and auth
-- **Firebase Firestore** - Real-time NoSQL database with easy setup
-
-For a simple expense tracker, localStorage is sufficient. For multi-user or cloud sync, consider Supabase or Firebase.
+Each transaction contains:
+- `_id` - MongoDB ObjectId
+- `title` - Transaction description
+- `amount` - Transaction amount (number)
+- `type` - "income" or "expense"
+- `category` - Selected category
+- `createdAt` - Timestamp
 
 ## Deployment
 
-This project is deployed and live. You can deploy your own version on:
+This project is deployed on Vercel. To deploy your own version:
 
-- [Vercel](https://vercel.com) (Recommended for Next.js)
-- [Netlify](https://netlify.com)
-- [Railway](https://railway.app)
+1. Push your code to GitHub
+2. Import the project in [Vercel](https://vercel.com)
+3. Add the `MONGODB_URI` environment variable in Vercel project settings
+4. Deploy
+
+The application will automatically create the database and collection on first use.
 
 ## Author
 
